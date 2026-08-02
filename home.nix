@@ -2,26 +2,24 @@
 
 {
   home.packages = with pkgs; [
-    p7zip wget zip unzip
-    arp-scan nmap tree
-    openssl btop
+    p7zip zip unzip
+    wget arp-scan nmap
+    tree btop
 
     postman
     nodejs cypress bun eas-cli wrangler live-server
-    clang clang-tools stdenv lld gnumake cmake lldb ninja libcxx pkg-config llvmPackages.libcxx
+    clang clang-tools stdenv lld gnumake cmake lldb ninja pkg-config llvmPackages.libcxx
     dotnet-sdk_10
-    #python3
+    python3
 
     pcmanfm
 
     unityhub
     stremio-linux-shell
-    teams-for-linux
-    ocaml
-    ocamlPackages.ocaml-lsp
-    ocamlPackages.dune_3
-    ocamlPackages.ocamlformat
+
+    maven
   ];
+
 
   programs.java.enable = true;
   programs.chromium.enable = true;
@@ -107,7 +105,7 @@
         #"lid:off" = { locked = true; action = "output eDP-1 enable"; };
       };
       keybindings = lib.mkOptionDefault {
-        "Mod4+c" = "exec ${pkgs.cliphist}/bin/cliphist list | rofi -dmenu | cliphist decode | wl-copy";
+        "Mod4+c" = "exec ${pkgs.cliphist}/bin/cliphist list | rofi -dmenu | cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
         "Mod4+p" = "exec ${pkgs.wl-color-picker}/bin/wl-color-picker";
         "Print" = "exec ${pkgs.grim}/bin/grim ~/Pictures/screenshot-$(date +%F-%T).png";
         "Shift+Print" = "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" ~/Pictures/screenshot-$(date +%F-%T).png";

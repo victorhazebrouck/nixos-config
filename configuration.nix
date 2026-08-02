@@ -39,6 +39,11 @@
     };
   };
 
+  services.tomcat.enable = true;
+  services.mysql = {
+    enable = true;
+    package = pkgs.mysql84;
+  };
 
   services.gnome.gnome-keyring.enable = true;
   services.libinput.enable = true;
