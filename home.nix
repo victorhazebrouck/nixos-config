@@ -4,7 +4,8 @@
   home.packages = with pkgs; [
     p7zip zip unzip
     wget arp-scan nmap
-    tree btop
+    tree jq btop
+    openssl
 
     postman
     nodejs cypress bun eas-cli wrangler live-server
@@ -18,6 +19,7 @@
     stremio-linux-shell
 
     maven
+    plantuml
   ];
 
 
@@ -45,7 +47,13 @@
 
   programs.zed-editor = {
     enable = true;
-    userSettings.load_direnv = "direct";
+    userSettings = {
+      load_direnv = "direct";
+      format_on_save = "off";
+      buffer_font_features.calt = false;
+      terminal.default_height = 640;
+      prettier.plugins = [ "prettier-plugin-tailwindcss" ];
+    };
     extraPackages = with pkgs; [ nil nixd omnisharp-roslyn csharp-ls ];
   };
 
@@ -206,11 +214,12 @@
     '';
   };
 
-#  xdg.portal.enable = true;
+
   home = {
     sessionVariables = {
       DOTNET_ROOT = "${pkgs.dotnet-sdk_10}/share/dotnet";
     };
+    sessionPath = [ "$HOME/.dotnet/tools" ];
     username = "victor";
     homeDirectory = "/home/victor";
     stateVersion = "26.05";

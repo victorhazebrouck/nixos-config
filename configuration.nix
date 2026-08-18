@@ -1,8 +1,18 @@
 { config, lib, pkgs, ... }:
 
 {
-  virtualisation.docker.enable = true;  
-  programs.nix-ld.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    libraries = [ pkgs.icu ];
+  };
+
+
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings.dns_enabled = true;
+    extraPackages = [ pkgs.podman-compose ];
+  };  
 
 
   programs.nano = {
@@ -39,11 +49,12 @@
     };
   };
 
-  services.tomcat.enable = true;
+
   services.mysql = {
     enable = true;
     package = pkgs.mysql84;
   };
+
 
   services.gnome.gnome-keyring.enable = true;
   services.libinput.enable = true;
@@ -130,7 +141,7 @@
       "video"
       "input"
       "disk"
-      "docker"
+      "podman"
     ];
   };
 
