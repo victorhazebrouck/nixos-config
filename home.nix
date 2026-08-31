@@ -28,7 +28,7 @@ in
   programs.direnv.enable = true;
   programs.onlyoffice.enable = true;
   programs.dbeaver.enable = true;
-  
+
 
   programs.git = {
     enable = true;

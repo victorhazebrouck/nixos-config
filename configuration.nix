@@ -25,6 +25,14 @@
   };
 
 
+  services.node-red = {
+    enable = true;
+    user = "victor";
+    withNpmAndGcc = true;
+    configFile = ./configs/node-red-settings.js;
+  };
+
+
   services.greetd = {
     enable = true;
     useTextGreeter = true;
