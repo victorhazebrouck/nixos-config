@@ -1,25 +1,23 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
+let
+  pkgs-unstable = import inputs.nixpkgs-unstable {
+    inherit (pkgs.stdenv.hostPlatform) system;
+  };
+in
 {
   home.packages = with pkgs; [
     p7zip zip unzip
     wget arp-scan nmap
-    tree jq btop
+    tree jq
     openssl
-
-    postman
+    seahorse pcmanfm btop bruno
     nodejs cypress bun eas-cli wrangler live-server
     clang clang-tools stdenv lld gnumake cmake lldb ninja pkg-config llvmPackages.libcxx
-    dotnet-sdk_10
+    dotnet-sdk_10 unityhub
     python3
-
-    pcmanfm
-
-    unityhub
     stremio-linux-shell
-
     maven
-    plantuml
   ];
 
 
@@ -47,14 +45,55 @@
 
   programs.zed-editor = {
     enable = true;
+    package = pkgs-unstable.zed-editor;
     userSettings = {
-      load_direnv = "direct";
       format_on_save = "off";
+      load_direnv = "direct";
       buffer_font_features.calt = false;
       terminal.default_height = 640;
       prettier.plugins = [ "prettier-plugin-tailwindcss" ];
+      lsp = {
+        yaml-language-server = {
+          binary.path = "${pkgs.yaml-language-server}/bin/yaml-language-server";
+          binary.arguments = [ "--stdio" ];
+        };
+        bash-language-server = {
+          binary.path = "${pkgs.bash-language-server}/bin/bash-language-server";
+          binary.arguments = [ "start" ];
+        };
+        angular = {
+          binary.path = "${pkgs.angular-language-server}/bin/ngserver";
+          binary.arguments = [ "--stdio" ];
+        };
+        json-language-server = {
+          binary.path = "${pkgs.vscode-json-languageserver}/bin/vscode-json-language-server";
+          binary.arguments = [ "--stdio" ];
+        };
+        roslyn = {
+          binary.path = "${pkgs.roslyn-ls}/bin/Microsoft.CodeAnalysis.LanguageServer";
+          binary.arguments = [ "--stdio" "--autoLoadProjects" ];
+          settings = {
+            "csharp|projects".dotnet_enable_automatic_restore = true;
+            "csharp|background_analysis" = {
+              dotnet_analyzer_diagnostics_scope = "openFiles";
+              dotnet_compiler_diagnostics_scope = "openFiles";
+            };
+          };
+        };
+      };
+      languages = {
+        CMake = {
+          tab_size = 4;
+        };
+        CSharp = {
+          language_servers = [ "roslyn" "!csharp-ls" "!omnisharp" "..." ];
+        };
+        Nix = {
+          language_servers = [ "nixd" "!nil" "..." ];
+        };
+      };
     };
-    extraPackages = with pkgs; [ nil nixd omnisharp-roslyn csharp-ls ];
+    extraPackages = with pkgs; [ nixd ];
   };
 
 
