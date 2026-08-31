@@ -29,7 +29,7 @@
     enable = true;
     user = "victor";
     withNpmAndGcc = true;
-    configFile = ./configs/node-red-settings.js;
+#    configFile = ./configs/node-red-settings.js;
   };
 
 
