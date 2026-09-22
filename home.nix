@@ -12,6 +12,7 @@ in
     tree jq
     openssl
     seahorse pcmanfm btop bruno
+    node-red
     nodejs cypress bun eas-cli wrangler live-server
     clang clang-tools stdenv lld gnumake cmake lldb ninja pkg-config llvmPackages.libcxx
     dotnet-sdk_10 unityhub
