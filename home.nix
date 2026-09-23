@@ -1,10 +1,5 @@
 { config, pkgs, lib, inputs, ... }:
 
-let
-  pkgs-unstable = import inputs.nixpkgs-unstable {
-    inherit (pkgs.stdenv.hostPlatform) system;
-  };
-in
 {
   home.packages = with pkgs; [
     p7zip zip unzip
@@ -17,7 +12,6 @@ in
     clang clang-tools stdenv lld gnumake cmake lldb ninja pkg-config llvmPackages.libcxx
     dotnet-sdk_10 unityhub
     python3
-    stremio-linux-shell
     maven
   ];
 
@@ -46,7 +40,6 @@ in
 
   programs.zed-editor = {
     enable = true;
-    package = pkgs-unstable.zed-editor;
     userSettings = {
       format_on_save = "off";
       load_direnv = "direct";
