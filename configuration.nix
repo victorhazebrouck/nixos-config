@@ -154,6 +154,6 @@
   };
 
 
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configurations/hardware-configuration-chuwi.nix ];
   system.stateVersion = "26.05";
 }

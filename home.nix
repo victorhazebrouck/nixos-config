@@ -143,7 +143,10 @@
         drag = "enabled";
         drag_lock = "enabled";
       };
-      output."*" = { scale = "1.25"; bg = "${./Wallpapers/Wallpaper2.png} fill"; };
+      output = {
+        "eDP-1" = { scale = "1"; bg = "${./Wallpapers/Wallpaper2.png} fill"; };
+        "*" = { scale = "1.25"; bg = "${./Wallpapers/Wallpaper2.png} fill"; };
+      };
       defaultWorkspace = "1";
       gaps = { inner = 7; smartGaps = true; smartBorders = "on"; };
       window = { titlebar = false; };
