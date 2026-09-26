@@ -41,10 +41,12 @@
   programs.zed-editor = {
     enable = true;
     userSettings = {
+      theme = "Gruvbox Dark";
       format_on_save = "off";
       load_direnv = "direct";
       buffer_font_features.calt = false;
       terminal.default_height = 640;
+      project_panel.dock = "left";
       prettier.plugins = [ "prettier-plugin-tailwindcss" ];
       lsp = {
         yaml-language-server = {
@@ -62,6 +64,14 @@
         json-language-server = {
           binary.path = "${pkgs.vscode-json-languageserver}/bin/vscode-json-language-server";
           binary.arguments = [ "--stdio" ];
+        };
+        cmake = {
+          binary.path = "${pkgs.neocmakelsp}/bin/neocmakelsp";
+          binary.arguments = [ "stdio" ];
+        };
+        nixd = {
+          binary.path = "${pkgs.nixd}/bin/nixd";
+          binary.arguments = [];
         };
         roslyn = {
           binary.path = "${pkgs.roslyn-ls}/bin/Microsoft.CodeAnalysis.LanguageServer";
@@ -87,7 +97,7 @@
         };
       };
     };
-    extraPackages = with pkgs; [ nixd ];
+    extensions = [ "nix" "csharp" "angular" "neocmake" "git-firefly" ];
   };
 
 
