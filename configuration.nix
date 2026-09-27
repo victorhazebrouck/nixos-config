@@ -1,12 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  programs.nix-ld = {
-    enable = true;
-    libraries = [ pkgs.icu ];
-  };
-
-
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
@@ -22,6 +16,25 @@
       set autoindent
       set tabstospaces
     '';
+  };
+
+
+  services.mysql = {
+    enable = true;
+    package = pkgs.mysql84;
+  };
+  services.postgresql = {
+    enable = true;
+    ensureDatabases = [ "victor" ];
+    ensureUsers = [
+      { name = "victor"; ensureDBOwnership = true; }
+    ];
+  };
+
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = [ pkgs.icu ];
   };
 
 
@@ -43,27 +56,15 @@
         [main]
         capslock = layer(meta)
         rightshift = end
+        rightcontrol = home
         rightalt = home
         leftmeta = rightmeta
       '';
     };
   };
 
-
-  services.mysql = {
-    enable = true;
-    package = pkgs.mysql84;
-  };
-  services.postgresql = {
-    enable = true;
-    ensureDatabases = [ "victor" ];
-    ensureUsers = [
-      { name = "victor"; ensureDBOwnership = true; }
-    ];
-  };
-
-
   services.gnome.gnome-keyring.enable = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
   services.libinput.enable = true;
   services.printing.enable = true;
   services.openssh.enable = true;
@@ -85,10 +86,10 @@
     enable = true;
     wlr.enable = true;
     xdgOpenUsePortal = true;
-    extraPortals = [ 
+    extraPortals = [
       pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-wlr  
-    ];    
+      pkgs.xdg-desktop-portal-wlr
+    ];
     config.common = {
       default = [ "gtk" ];
       "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];

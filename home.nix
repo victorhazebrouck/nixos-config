@@ -13,6 +13,7 @@
     dotnet-sdk_10 unityhub
     python3
     maven
+    sequeler
   ];
 
 
@@ -22,7 +23,6 @@
   programs.bash.enable = true;
   programs.direnv.enable = true;
   programs.onlyoffice.enable = true;
-  programs.dbeaver.enable = true;
 
 
   programs.git = {
@@ -124,6 +124,15 @@
   };
 
 
+  home.pointerCursor = {
+    gtk.enable = true;
+    sway.enable = true;
+    package = pkgs.vanilla-dmz;
+    name = "Vanilla-DMZ";
+    size = 24;
+  };
+
+
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
@@ -134,14 +143,16 @@
       modifier = "Mod4";
       terminal = "alacritty";
       menu = "rofi -show drun";
-      input."type:keyboard" = {
-        xkb_options = "compose:rwin,numpad:mac";
-      };
-      input."type:touchpad" = {
-        tap = "enabled";
-        dwt = "enabled";
-        drag = "enabled";
-        drag_lock = "enabled";
+      input = {
+        "type:keyboard" = {
+          xkb_options = "compose:rwin,numpad:mac";
+        };
+        "type:touchpad" = {
+          tap = "enabled";
+          dwt = "enabled";
+          drag = "enabled";
+          drag_lock = "enabled";
+        };
       };
       output = {
         "eDP-1" = { scale = "1"; bg = "${./Wallpapers/Wallpaper2.png} fill"; };
@@ -258,6 +269,16 @@
         border-bottom: 2px solid #d4be98;
       }
     '';
+  };
+
+
+  xdg = {
+    enable = true;
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      setSessionVariables = true;
+    };
   };
 
 
